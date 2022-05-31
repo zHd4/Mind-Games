@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
 import java.util.Scanner;
 
 public class Cli {
@@ -7,7 +8,7 @@ public class Cli {
         String userName = null;
 
         while (userName == null) {
-            System.out.println("May I have your name? ");
+            System.out.print("May I have your name? ");
 
             Scanner userInputScanner = new Scanner(System.in);
             String inputResult = userInputScanner.nextLine();
@@ -18,6 +19,24 @@ public class Cli {
         }
 
         return userName;
+    }
+
+    public static Integer getUserChoice() throws InvalidMenuNumberChoiceException {
+        System.out.print("Your choice: ");
+
+        Scanner userInputScanner = new Scanner(System.in);
+        String inputResult = userInputScanner.nextLine();
+
+        try {
+            Integer result = Integer.parseInt(inputResult);
+
+            System.out.print('\n');
+
+            return result;
+        } catch (NumberFormatException e) {
+            System.out.println("Enter a valid number!\n");
+            throw new InvalidMenuNumberChoiceException();
+        }
     }
 }
 

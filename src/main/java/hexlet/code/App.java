@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import hexlet.code.commands.Command;
+import hexlet.code.commands.Even;
 import hexlet.code.commands.Exit;
 import hexlet.code.commands.Greet;
 import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
@@ -29,8 +30,9 @@ public class App {
     }
 
     private static void load() {
-        COMMANDS_MAP.put("Greet", new Greet());
-        COMMANDS_MAP.put("Exit", new Exit());
+        COMMANDS_MAP.put("Greet", new Greet()); // 1
+        COMMANDS_MAP.put("Even", new Even()); // 2
+        COMMANDS_MAP.put("Exit", new Exit()); // 0
     }
 
     private static Command getUserMenuChoice() throws InvalidMenuNumberChoiceException {

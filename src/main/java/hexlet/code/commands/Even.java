@@ -3,6 +3,8 @@ package hexlet.code.commands;
 import hexlet.code.games.EvenGame;
 
 public final class Even implements Command {
+    private static final int COMMAND_NUMBER = 2;
+
     @Override
     public void execute() {
         if (Greet.getUserName() == null) {
@@ -14,6 +16,6 @@ public final class Even implements Command {
 
     @Override
     public int getCommandNumber() {
-        return 2;
+        return COMMAND_NUMBER;
     }
 }

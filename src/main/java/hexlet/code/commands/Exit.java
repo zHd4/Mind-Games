@@ -1,6 +1,8 @@
 package hexlet.code.commands;
 
 public final class Exit implements Command {
+    private static final int COMMAND_NUMBER = 0;
+
     @Override
     public void execute() {
         System.exit(0);
@@ -8,6 +10,6 @@ public final class Exit implements Command {
 
     @Override
     public int getCommandNumber() {
-        return 0;
+        return COMMAND_NUMBER;
     }
 }

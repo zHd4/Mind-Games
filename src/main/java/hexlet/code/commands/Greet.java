@@ -3,6 +3,8 @@ package hexlet.code.commands;
 import hexlet.code.Cli;
 
 public final class Greet implements Command {
+    private static final int COMMAND_NUMBER = 1;
+
     private static String userName = null;
 
     public static String getUserName() {
@@ -17,7 +19,7 @@ public final class Greet implements Command {
 
     @Override
     public int getCommandNumber() {
-        return 1;
+        return COMMAND_NUMBER;
     }
 
     public void greeting() {

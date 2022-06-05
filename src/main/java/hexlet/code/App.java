@@ -1,9 +1,11 @@
 package hexlet.code;
 
 import hexlet.code.commands.Command;
-import hexlet.code.commands.Even;
-import hexlet.code.commands.Exit;
 import hexlet.code.commands.Greet;
+import hexlet.code.commands.Even;
+import hexlet.code.commands.Calc;
+import hexlet.code.commands.Exit;
+
 import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
 
 import java.util.HashMap;
@@ -31,6 +33,7 @@ public class App {
 
     private static void load() {
         COMMANDS_MAP.put("Greet", new Greet()); // 1
+        COMMANDS_MAP.put("Calc", new Calc()); // 3
         COMMANDS_MAP.put("Even", new Even()); // 2
         COMMANDS_MAP.put("Exit", new Exit()); // 0
     }
@@ -49,7 +52,7 @@ public class App {
             commandsNumbers.put(commandNumber, commandName);
         }
 
-        String commandName = commandsNumbers.get(Cli.getUserChoice());
+        String commandName = commandsNumbers.get(Cli.integerInput("Your choice: "));
 
         return COMMANDS_MAP.get(commandName);
     }

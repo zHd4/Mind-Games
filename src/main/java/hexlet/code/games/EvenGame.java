@@ -3,7 +3,7 @@ package hexlet.code.games;
 import hexlet.code.Cli;
 import hexlet.code.commands.Greet;
 
-import java.util.concurrent.ThreadLocalRandom;
+import static hexlet.code.MathTools.randomInt;
 
 public final class EvenGame implements Game {
     private static final int RANDOM_MIN = 22;
@@ -22,7 +22,7 @@ public final class EvenGame implements Game {
         System.out.println("Answer 'yes' if the number is even, otherwise answer 'no'.");
 
         while (gameRunning) {
-            int question = randomInt();
+            int question = randomInt(RANDOM_MIN, RANDOM_MAX);
             boolean isEven = question % 2 == 0;
 
             System.out.printf("Question: %s\n", question);
@@ -49,10 +49,6 @@ public final class EvenGame implements Game {
                 switchGameState();
             }
         }
-    }
-
-    private int randomInt() {
-        return ThreadLocalRandom.current().nextInt(RANDOM_MIN, RANDOM_MAX + 1);
     }
 
     private void switchGameState() {

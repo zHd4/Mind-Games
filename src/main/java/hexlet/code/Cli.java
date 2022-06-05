@@ -22,8 +22,8 @@ public class Cli {
         return userName;
     }
 
-    public static Integer getUserChoice() throws InvalidMenuNumberChoiceException {
-        System.out.print("Your choice: ");
+    public static Integer integerInput(String text) throws InvalidMenuNumberChoiceException {
+        System.out.print(text);
 
         String inputResult = USER_INPUT_SCANNER.nextLine();
 

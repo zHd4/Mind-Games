@@ -9,12 +9,16 @@ import hexlet.code.commands.Exit;
 
 import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Comparator;
 import java.util.Objects;
 
+import static java.util.stream.Collectors.toMap;
+
 public class App {
-    private static final Map<String, Command> COMMANDS_MAP = new HashMap<>();
+    private static LinkedHashMap<String, Command> commandsMap = new LinkedHashMap<>();
 
     public static void main(String[] args) {
         load();
@@ -33,11 +37,17 @@ public class App {
     }
 
     private static void load() {
-        COMMANDS_MAP.put("Greet", new Greet()); // 1
-        COMMANDS_MAP.put("Calc", new Calc()); // 3
-        COMMANDS_MAP.put("Even", new Even()); // 2
-        COMMANDS_MAP.put("GCD", new GCD()); // 4
-        COMMANDS_MAP.put("Exit", new Exit()); // 0
+        Map<String, Command> source = new HashMap<>();
+
+        source.put("Greet", new Greet()); // 1
+        source.put("Even", new Even()); // 2
+        source.put("Calc", new Calc()); // 3
+        source.put("GCD", new GCD()); // 4
+        source.put("Exit", new Exit()); // 0
+
+        commandsMap = source.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.comparing(Command::getCommandNumber)))
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (s1, s2) -> s1, LinkedHashMap::new));
     }
 
     private static Command getUserMenuChoice() throws InvalidMenuNumberChoiceException {
@@ -45,17 +55,22 @@ public class App {
 
         System.out.println("Please enter the game number and press Enter.");
 
-        for (Map.Entry<String, Command> entry : COMMANDS_MAP.entrySet()) {
+        for (Map.Entry<String, Command> entry : commandsMap.entrySet()) {
             String commandName = entry.getKey();
             Integer commandNumber = entry.getValue().getCommandNumber();
 
-            System.out.printf("%s - %s\n", commandNumber, commandName);
-
             commandsNumbers.put(commandNumber, commandName);
+
+            if (commandNumber == 0) {
+                continue;
+            }
+
+            System.out.printf("%s - %s\n", commandNumber, commandName);
         }
 
+        System.out.println("0 - Exit");
         String commandName = commandsNumbers.get(Cli.integerInput("Your choice: "));
 
-        return COMMANDS_MAP.get(commandName);
+        return commandsMap.get(commandName);
     }
 }

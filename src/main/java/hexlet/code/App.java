@@ -5,6 +5,7 @@ import hexlet.code.commands.Greet;
 import hexlet.code.commands.Even;
 import hexlet.code.commands.Calc;
 import hexlet.code.commands.GCD;
+import hexlet.code.commands.Progression;
 import hexlet.code.commands.Exit;
 
 import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
@@ -43,6 +44,7 @@ public class App {
         source.put("Even", new Even()); // 2
         source.put("Calc", new Calc()); // 3
         source.put("GCD", new GCD()); // 4
+        source.put("Progression", new Progression()); // 5
         source.put("Exit", new Exit()); // 0
 
         commandsMap = source.entrySet().stream()

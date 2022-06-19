@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.tools;
 
 import java.util.concurrent.ThreadLocalRandom;
 

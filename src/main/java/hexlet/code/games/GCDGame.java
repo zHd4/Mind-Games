@@ -1,17 +1,14 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-import hexlet.code.commands.Greet;
-import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
-
-import static hexlet.code.MathTools.randomInt;
+import hexlet.code.tools.GamesTools;
+import static hexlet.code.tools.MathTools.randomInt;
 
 public final class GCDGame implements Game {
     private static final int RANDOM_MIN = 22;
 
     private static final int RANDOM_MAX = 3333;
 
-    private static final int MAX_CORRECT_ANSWERS = 3;
+    private static final int MAX_CORRECT_ANSWERS = 3 - 1;
 
     private boolean gameRunning = false;
 
@@ -20,7 +17,7 @@ public final class GCDGame implements Game {
         int correctAnswersCount = 0;
 
         switchGameState();
-        System.out.println("Answer 'yes' if the number is even, otherwise answer 'no'.");
+        System.out.println("Find the greatest common divisor of given numbers.");
 
         while (gameRunning) {
             int a = randomInt(RANDOM_MIN, RANDOM_MAX);
@@ -30,27 +27,12 @@ public final class GCDGame implements Game {
 
             System.out.printf("Question: %s %s\n", a, b);
 
-            try {
-                int answer = Cli.integerInput("Your answer: ");
+            UserAnswer answer = GamesTools.askUser(gcd, correctAnswersCount, MAX_CORRECT_ANSWERS);
 
-                if (answer == gcd) {
-                    correctAnswersCount++;
-
-                    System.out.println("Correct!\n");
-
-                    if (correctAnswersCount == MAX_CORRECT_ANSWERS) {
-                        System.out.printf("Congratulations, %s!\n\n", Greet.getUserName());
-                        switchGameState();
-                    }
-                } else {
-                    System.out.printf("'%s' is wrong answer ;(. Correct answer was '%s'.\n",
-                            answer, gcd);
-
-                    System.out.printf("Let's try again, %s!\n\n", Greet.getUserName());
-                    switchGameState();
-                }
-            } catch (InvalidMenuNumberChoiceException ignored) {
-                // ignored
+            if (answer == UserAnswer.CORRECT) {
+                correctAnswersCount++;
+            } else if (answer == UserAnswer.WRONG || answer == UserAnswer.DONE) {
+                switchGameState();
             }
         }
     }

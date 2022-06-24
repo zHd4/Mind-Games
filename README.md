@@ -10,3 +10,6 @@ GCD Game:
 
 Progression Game:
 ![alt text](https://github.com/zHd4/java-project-lvl1/raw/main/demo3.png)
+
+Prime Game:
+![alt text](https://github.com/zHd4/java-project-lvl1/raw/main/demo4.png)

@@ -2,8 +2,8 @@ package hexlet.code.commands;
 
 import hexlet.code.Cli;
 
-public final class Greet implements Command {
-    private static final int COMMAND_NUMBER = 1;
+public final class Greet {
+    public static final int COMMAND_INDEX = 1;
 
     private static String userName = null;
 
@@ -11,18 +11,12 @@ public final class Greet implements Command {
         return userName;
     }
 
-    @Override
-    public void execute() {
+    public static void execute() {
         greeting();
         System.exit(0);
     }
 
-    @Override
-    public int getCommandNumber() {
-        return COMMAND_NUMBER;
-    }
-
-    public void greeting() {
+    public static void greeting() {
         System.out.println("Welcome to the Brain Games!");
 
         userName = Cli.getUserName();

@@ -1,11 +1,14 @@
 package hexlet.code.games;
 
+import hexlet.code.commands.Greet;
 import hexlet.code.tools.GamesTools;
 import java.util.Arrays;
 
 import static hexlet.code.tools.MathTools.randomInt;
 
-public final class ProgressionGame implements Game {
+public final class ProgressionGame {
+    public static final int COMMAND_INDEX = 5;
+
     private static final int VALUE_RANDOM_MIN = 2;
 
     private static final int VALUE_RANDOM_MAX = 64;
@@ -18,10 +21,13 @@ public final class ProgressionGame implements Game {
 
     private static final int MAX_CORRECT_ANSWERS = 3 - 1;
 
-    private boolean gameRunning = false;
+    private static boolean gameRunning = false;
 
-    @Override
-    public void startGameLoop() {
+    public static void startGameLoop() {
+        if (Greet.getUserName() == null) {
+            Greet.greeting();
+        }
+
         int correctAnswersCount = 0;
 
         switchGameState();
@@ -45,7 +51,7 @@ public final class ProgressionGame implements Game {
         }
     }
 
-    private int[] generateProgression() {
+    private static int[] generateProgression() {
         int length = randomInt(LENGTH_RANDOM_MIN, LENGTH_RANDOM_MAX);
         int[] progression = new int[length];
 
@@ -74,7 +80,7 @@ public final class ProgressionGame implements Game {
         return false;
     }
 
-    private String progressionToQuestionString(int[] progression, int questionNumberIndex) {
+    private static String progressionToQuestionString(int[] progression, int questionNumberIndex) {
         int length = progression.length;
         String[] progressionStringsArray = new String[length];
 
@@ -89,7 +95,7 @@ public final class ProgressionGame implements Game {
         return String.join(" ", progressionStringsArray);
     }
 
-    private void switchGameState() {
+    private static void switchGameState() {
         gameRunning = !gameRunning;
     }
 }

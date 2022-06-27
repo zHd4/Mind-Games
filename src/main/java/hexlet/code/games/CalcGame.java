@@ -1,9 +1,12 @@
 package hexlet.code.games;
 
+import hexlet.code.commands.Greet;
 import hexlet.code.tools.GamesTools;
 import static hexlet.code.tools.MathTools.randomInt;
 
-public final class CalcGame implements Game {
+public final class CalcGame {
+    public static final int COMMAND_INDEX = 3;
+
     private static final int RANDOM_MIN = 22;
 
     private static final int RANDOM_MAX = 3333;
@@ -12,10 +15,13 @@ public final class CalcGame implements Game {
 
     private static final char[] MATH_OPERATIONS = new char[] {'+', '-', '*'};
 
-    private boolean gameRunning = false;
+    private static boolean gameRunning = false;
 
-    @Override
-    public void startGameLoop() {
+    public static void startGameLoop() {
+        if (Greet.getUserName() == null) {
+            Greet.greeting();
+        }
+
         int correctAnswersCount = 0;
 
         switchGameState();
@@ -41,7 +47,7 @@ public final class CalcGame implements Game {
         }
     }
 
-    private int calculate(int firstOperator, int secondOperator, char operation) {
+    private static int calculate(int firstOperator, int secondOperator, char operation) {
         int result = 0;
 
         switch (operation) {
@@ -64,7 +70,7 @@ public final class CalcGame implements Game {
         return result;
     }
 
-    private void switchGameState() {
+    private static void switchGameState() {
         gameRunning = !gameRunning;
     }
 }

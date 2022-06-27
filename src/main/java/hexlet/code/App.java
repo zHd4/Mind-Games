@@ -1,26 +1,20 @@
 package hexlet.code;
 
-import hexlet.code.commands.Command;
-import hexlet.code.commands.Greet;
-import hexlet.code.commands.Even;
-import hexlet.code.commands.Calc;
-import hexlet.code.commands.GCD;
-import hexlet.code.commands.Progression;
-import hexlet.code.commands.Prime;
 import hexlet.code.commands.Exit;
-
+import hexlet.code.commands.Greet;
 import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
+
+import hexlet.code.games.EvenGame;
+import hexlet.code.games.CalcGame;
+import hexlet.code.games.GCDGame;
+import hexlet.code.games.ProgressionGame;
+import hexlet.code.games.PrimeGame;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Comparator;
-import java.util.Objects;
-
-import static java.util.stream.Collectors.toMap;
 
 public class App {
-    private static LinkedHashMap<String, Command> commandsMap = new LinkedHashMap<>();
+    private static final LinkedHashMap<Integer, String> GAMES_MAP = new LinkedHashMap<>();
 
     public static void main(String[] args) {
         load();
@@ -28,53 +22,59 @@ public class App {
         //noinspection InfiniteLoopStatement
         while (true) {
             try {
-                Objects.requireNonNull(getUserMenuChoice()).execute();
-            } catch (NullPointerException e) {
+                System.out.println("Please enter the game number and press Enter.");
+
+                for (Map.Entry<Integer, String> entry : GAMES_MAP.entrySet()) {
+                    Integer gameIndex = entry.getKey();
+                    String gameName = entry.getValue();
+
+                    System.out.printf("%s - %s\n", gameIndex, gameName);
+                }
+
+                executeGame(GAMES_MAP.get(Cli.integerInput("Your choice: ")));
+            }  catch (NullPointerException e) {
                 System.out.println("Wrong choice!\n");
-            } catch (InvalidMenuNumberChoiceException e) {
-                //noinspection UnnecessaryContinue
-                continue;
+            } catch (InvalidMenuNumberChoiceException ignored) {
+                // ignored
             }
         }
     }
 
     private static void load() {
-        Map<String, Command> source = new HashMap<>();
-
-        source.put("Greet", new Greet()); // 1
-        source.put("Even", new Even()); // 2
-        source.put("Calc", new Calc()); // 3
-        source.put("GCD", new GCD()); // 4
-        source.put("Progression", new Progression()); // 5
-        source.put("Prime", new Prime()); // 6
-        source.put("Exit", new Exit()); // 0
-
-        commandsMap = source.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.comparing(Command::getCommandNumber)))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (s1, s2) -> s1, LinkedHashMap::new));
+        GAMES_MAP.put(Greet.COMMAND_INDEX, "Greet"); // 1
+        GAMES_MAP.put(EvenGame.COMMAND_INDEX, "Even"); // 2
+        GAMES_MAP.put(CalcGame.COMMAND_INDEX, "Calc"); // 3
+        GAMES_MAP.put(GCDGame.COMMAND_INDEX, "GCD"); // 4
+        GAMES_MAP.put(ProgressionGame.COMMAND_INDEX, "Progression"); // 5
+        GAMES_MAP.put(PrimeGame.COMMAND_INDEX, "Prime"); // 6
+        GAMES_MAP.put(Exit.COMMAND_INDEX, "Exit"); // 0
     }
 
-    private static Command getUserMenuChoice() throws InvalidMenuNumberChoiceException {
-        final Map<Integer, String> commandsNumbers = new HashMap<>();
-
-        System.out.println("Please enter the game number and press Enter.");
-
-        for (Map.Entry<String, Command> entry : commandsMap.entrySet()) {
-            String commandName = entry.getKey();
-            Integer commandNumber = entry.getValue().getCommandNumber();
-
-            commandsNumbers.put(commandNumber, commandName);
-
-            if (commandNumber == 0) {
-                continue;
-            }
-
-            System.out.printf("%s - %s\n", commandNumber, commandName);
+    private static void executeGame(String choosenGameName) {
+        switch (choosenGameName) {
+            case "Greet":
+                Greet.execute();
+                break;
+            case "Even":
+                EvenGame.startGameLoop();
+                break;
+            case "Calc":
+                CalcGame.startGameLoop();
+                break;
+            case "GCD":
+                GCDGame.startGameLoop();
+                break;
+            case "Progression":
+                ProgressionGame.startGameLoop();
+                break;
+            case "Prime":
+                PrimeGame.startGameLoop();
+                break;
+            case "Exit":
+                Exit.execute();
+                break;
+            default:
+                throw new NullPointerException();
         }
-
-        System.out.println("0 - Exit");
-        String commandName = commandsNumbers.get(Cli.integerInput("Your choice: "));
-
-        return commandsMap.get(commandName);
     }
 }

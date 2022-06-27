@@ -1,15 +1,9 @@
 package hexlet.code.commands;
 
-public final class Exit implements Command {
-    private static final int COMMAND_NUMBER = 0;
+public final class Exit {
+    public static final int COMMAND_INDEX = 0;
 
-    @Override
-    public void execute() {
+    public static void execute() {
         System.exit(0);
-    }
-
-    @Override
-    public int getCommandNumber() {
-        return COMMAND_NUMBER;
     }
 }

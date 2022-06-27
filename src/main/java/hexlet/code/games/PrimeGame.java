@@ -1,20 +1,26 @@
 package hexlet.code.games;
 
+import hexlet.code.commands.Greet;
 import hexlet.code.tools.GamesTools;
 
 import static hexlet.code.tools.MathTools.randomInt;
 
-public final class PrimeGame implements Game {
+public final class PrimeGame {
+    public static final int COMMAND_INDEX = 6;
+
     private static final int RANDOM_MIN = 1;
 
     private static final int RANDOM_MAX = 100;
 
     private static final int MAX_CORRECT_ANSWERS = 3 - 1;
 
-    private boolean gameRunning = false;
+    private static boolean gameRunning = false;
 
-    @Override
-    public void startGameLoop() {
+    public static void startGameLoop() {
+        if (Greet.getUserName() == null) {
+            Greet.greeting();
+        }
+
         int correctAnswersCount = 0;
 
         switchGameState();
@@ -37,7 +43,7 @@ public final class PrimeGame implements Game {
         }
     }
 
-    private boolean checkPrime(int number) {
+    private static boolean checkPrime(int number) {
         if (number == 0 || number == 1) {
             return false;
         }
@@ -53,7 +59,7 @@ public final class PrimeGame implements Game {
         return true;
     }
 
-    private void switchGameState() {
+    private static void switchGameState() {
         gameRunning = !gameRunning;
     }
 }

@@ -1,20 +1,26 @@
 package hexlet.code.games;
 
+import hexlet.code.commands.Greet;
 import hexlet.code.tools.GamesTools;
 
 import static hexlet.code.tools.MathTools.randomInt;
 
-public final class EvenGame implements Game {
+public final class EvenGame  {
+    public static final int COMMAND_INDEX = 2;
+
     private static final int RANDOM_MIN = 22;
 
     private static final int RANDOM_MAX = 3333;
 
     private static final int MAX_CORRECT_ANSWERS = 3 - 1;
 
-    private boolean gameRunning = false;
+    private static boolean gameRunning = false;
 
-    @Override
-    public void startGameLoop() {
+    public static void startGameLoop() {
+        if (Greet.getUserName() == null) {
+            Greet.greeting();
+        }
+
         int correctAnswersCount = 0;
 
         switchGameState();
@@ -36,7 +42,7 @@ public final class EvenGame implements Game {
         }
     }
 
-    private void switchGameState() {
+    private static void switchGameState() {
         gameRunning = !gameRunning;
     }
 }

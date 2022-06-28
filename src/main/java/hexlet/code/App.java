@@ -19,24 +19,21 @@ public class App {
     public static void main(String[] args) {
         load();
 
-        //noinspection InfiniteLoopStatement
-        while (true) {
-            try {
-                System.out.println("Please enter the game number and press Enter.");
+        try {
+            System.out.println("Please enter the game number and press Enter.");
 
-                for (Map.Entry<Integer, String> entry : GAMES_MAP.entrySet()) {
-                    Integer gameIndex = entry.getKey();
-                    String gameName = entry.getValue();
+            for (Map.Entry<Integer, String> entry : GAMES_MAP.entrySet()) {
+                Integer gameIndex = entry.getKey();
+                String gameName = entry.getValue();
 
-                    System.out.printf("%s - %s\n", gameIndex, gameName);
-                }
-
-                executeGame(GAMES_MAP.get(Cli.integerInput("Your choice: ")));
-            }  catch (NullPointerException e) {
-                System.out.println("Wrong choice!\n");
-            } catch (InvalidMenuNumberChoiceException ignored) {
-                // ignored
+                System.out.printf("%s - %s\n", gameIndex, gameName);
             }
+
+            executeGame(GAMES_MAP.get(Cli.integerInput("Your choice: ")));
+        }  catch (NullPointerException e) {
+            System.out.println("Wrong choice!\n");
+        } catch (InvalidMenuNumberChoiceException ignored) {
+            // ignored
         }
     }
 

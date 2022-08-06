@@ -29,7 +29,7 @@ public class App {
                 System.out.printf("%s - %s\n", gameIndex, gameName);
             }
 
-            executeGame(GAMES_MAP.get(Cli.integerInput("Your choice: ")));
+            executeGame(GAMES_MAP.get(Engine.integerInput("Your choice: ")));
         }  catch (NullPointerException e) {
             System.out.println("Wrong choice!\n");
         } catch (InvalidMenuNumberChoiceException ignored) {

@@ -1,6 +1,6 @@
 package hexlet.code.tools;
 
-import hexlet.code.Cli;
+import hexlet.code.Engine;
 import hexlet.code.commands.Greet;
 import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
 import hexlet.code.games.UserAnswer;
@@ -8,7 +8,7 @@ import hexlet.code.games.UserAnswer;
 public class GamesTools {
     public static UserAnswer askUser(int correctAnswer, int correctAnswersCount, int maxCorrectAnswers) {
         try {
-            int answer = Cli.integerInput("Your answer: ");
+            int answer = Engine.integerInput("Your answer: ");
 
             if (answer == correctAnswer) {
                 System.out.println("Correct!\n");
@@ -34,7 +34,7 @@ public class GamesTools {
     }
 
     public static UserAnswer askUser(boolean correctAnswer, int correctAnswersCount, int maxCorrectAnswers) {
-        boolean answer = Cli.inputYesNo("Your answer: ");
+        boolean answer = Engine.inputYesNo("Your answer: ");
 
         if (answer == correctAnswer) {
             System.out.println("Correct!\n");

@@ -13,9 +13,9 @@ public final class ProgressionGame {
 
     private static final int VALUE_RANDOM_MAX = 64;
 
-    private static final int LENGTH_RANDOM_MIN = 15;
+    private static final int LENGTH_RANDOM_MIN = 5;
 
-    private static final int LENGTH_RANDOM_MAX = 64;
+    private static final int LENGTH_RANDOM_MAX = 10;
 
     private static final int QUESTION_INDEX_RANDOM_MIN = 3;
 

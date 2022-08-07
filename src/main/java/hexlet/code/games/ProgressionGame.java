@@ -9,9 +9,13 @@ import static hexlet.code.tools.MathTools.randomInt;
 public final class ProgressionGame {
     public static final int COMMAND_INDEX = 5;
 
-    private static final int VALUE_RANDOM_MIN = 2;
+    private static final int STEP_RANDOM_MIN = 2;
 
-    private static final int VALUE_RANDOM_MAX = 64;
+    private static final int STEP_RANDOM_MAX = 6;
+
+    private static final int START_RANDOM_MIN = 3;
+
+    private static final int START_RANDOM_MAX = 22;
 
     private static final int LENGTH_RANDOM_MIN = 5;
 
@@ -52,32 +56,21 @@ public final class ProgressionGame {
     }
 
     private static int[] generateProgression() {
+        int step = randomInt(STEP_RANDOM_MIN, STEP_RANDOM_MAX);
+
+        int current = randomInt(START_RANDOM_MIN, START_RANDOM_MAX);
         int length = randomInt(LENGTH_RANDOM_MIN, LENGTH_RANDOM_MAX);
+
         int[] progression = new int[length];
 
         for (int i = 0; i < length; i++) {
-            int randomNumber = randomInt(VALUE_RANDOM_MIN, VALUE_RANDOM_MAX);
-
-            if (!checkIntValueInArray(progression, randomNumber)) {
-                progression[i] = randomNumber;
-            } else {
-                i--;
-            }
+            progression[i] = current;
+            current += step;
         }
 
         Arrays.sort(progression);
 
         return progression;
-    }
-
-    private static boolean checkIntValueInArray(int[] arr, int value) {
-        for (int element : arr) {
-            if (element == value) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private static String progressionToQuestionString(int[] progression, int questionNumberIndex) {

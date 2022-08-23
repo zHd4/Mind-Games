@@ -10,26 +10,21 @@ import hexlet.code.games.GCDGame;
 import hexlet.code.games.ProgressionGame;
 import hexlet.code.games.PrimeGame;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class App {
-    private static final LinkedHashMap<Integer, String> GAMES_MAP = new LinkedHashMap<>();
 
     public static void main(String[] args) {
-        load();
-
         try {
             System.out.println("Please enter the game number and press Enter.");
 
-            for (Map.Entry<Integer, String> entry : GAMES_MAP.entrySet()) {
-                Integer gameIndex = entry.getKey();
-                String gameName = entry.getValue();
+            System.out.println("1 - Greet");
+            System.out.println("2 - Even");
+            System.out.println("3 - Calc");
+            System.out.println("4 - GCD");
+            System.out.println("5 - Progression");
+            System.out.println("6 - Prime");
+            System.out.println("0 - Exit");
 
-                System.out.printf("%s - %s\n", gameIndex, gameName);
-            }
-
-            executeGame(GAMES_MAP.get(Engine.integerInput("Your choice: ")));
+            executeGame(Engine.integerInput("Your choice: "));
         }  catch (NullPointerException e) {
             System.out.println("Wrong choice!\n");
         } catch (InvalidMenuNumberChoiceException ignored) {
@@ -37,37 +32,27 @@ public class App {
         }
     }
 
-    private static void load() {
-        GAMES_MAP.put(Greet.COMMAND_INDEX, "Greet"); // 1
-        GAMES_MAP.put(EvenGame.COMMAND_INDEX, "Even"); // 2
-        GAMES_MAP.put(CalcGame.COMMAND_INDEX, "Calc"); // 3
-        GAMES_MAP.put(GCDGame.COMMAND_INDEX, "GCD"); // 4
-        GAMES_MAP.put(ProgressionGame.COMMAND_INDEX, "Progression"); // 5
-        GAMES_MAP.put(PrimeGame.COMMAND_INDEX, "Prime"); // 6
-        GAMES_MAP.put(Exit.COMMAND_INDEX, "Exit"); // 0
-    }
-
-    private static void executeGame(String choosenGameName) {
-        switch (choosenGameName) {
-            case "Greet":
+    private static void executeGame(int chosenGameIndex) {
+        switch (chosenGameIndex) {
+            case Greet.COMMAND_INDEX:
                 Greet.execute();
                 break;
-            case "Even":
+            case EvenGame.COMMAND_INDEX:
                 EvenGame.startGameLoop();
                 break;
-            case "Calc":
+            case CalcGame.COMMAND_INDEX:
                 CalcGame.startGameLoop();
                 break;
-            case "GCD":
+            case GCDGame.COMMAND_INDEX:
                 GCDGame.startGameLoop();
                 break;
-            case "Progression":
+            case ProgressionGame.COMMAND_INDEX:
                 ProgressionGame.startGameLoop();
                 break;
-            case "Prime":
+            case PrimeGame.COMMAND_INDEX:
                 PrimeGame.startGameLoop();
                 break;
-            case "Exit":
+            case Exit.COMMAND_INDEX:
                 Exit.execute();
                 break;
             default:

@@ -1,9 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.commands.Exit;
-import hexlet.code.commands.Greet;
-import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
-
 import hexlet.code.games.EvenGame;
 import hexlet.code.games.CalcGame;
 import hexlet.code.games.GCDGame;
@@ -24,36 +20,34 @@ public class App {
             System.out.println("6 - Prime");
             System.out.println("0 - Exit");
 
-            executeGame(Engine.integerInput("Your choice: "));
+            executeGame(Engine.getUserAnswer("Your choice: "));
         }  catch (NullPointerException e) {
             System.out.println("Wrong choice!\n");
-        } catch (InvalidMenuNumberChoiceException ignored) {
-            // ignored
         }
     }
 
-    private static void executeGame(int chosenGameIndex) {
-        switch (chosenGameIndex) {
-            case Greet.COMMAND_INDEX:
-                Greet.execute();
+    private static void executeGame(String chosenGame) {
+        switch (chosenGame) {
+            case "1":
+                Engine.meetUser();
                 break;
-            case EvenGame.COMMAND_INDEX:
-                EvenGame.startGameLoop();
+            case "2":
+                EvenGame.play();
                 break;
-            case CalcGame.COMMAND_INDEX:
-                CalcGame.startGameLoop();
+            case "3":
+                CalcGame.play();
                 break;
-            case GCDGame.COMMAND_INDEX:
-                GCDGame.startGameLoop();
+            case "4":
+                GCDGame.play();
                 break;
-            case ProgressionGame.COMMAND_INDEX:
-                ProgressionGame.startGameLoop();
+            case "5":
+                ProgressionGame.play();
                 break;
-            case PrimeGame.COMMAND_INDEX:
-                PrimeGame.startGameLoop();
+            case "6":
+                PrimeGame.play();
                 break;
-            case Exit.COMMAND_INDEX:
-                Exit.execute();
+            case "0":
+                System.exit(0);
                 break;
             default:
                 throw new NullPointerException();

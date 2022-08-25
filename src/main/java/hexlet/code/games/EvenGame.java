@@ -1,48 +1,42 @@
 package hexlet.code.games;
 
-import hexlet.code.commands.Greet;
-import hexlet.code.tools.GamesTools;
+import hexlet.code.Engine;
 
-import static hexlet.code.tools.MathTools.randomInt;
+import static hexlet.code.MathTools.randomInt;
 
 public final class EvenGame  {
-    public static final int COMMAND_INDEX = 2;
+    private static int randomNumber;
 
-    private static final int RANDOM_MIN = 22;
+    private static final String[] QUESTION = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static final int RANDOM_MAX = 3333;
+    private static final String[] CORRECT_ANSWER = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static final int MAX_CORRECT_ANSWERS = 3 - 1;
+    private static final String GAME_TASK = "Answer 'yes' if number even otherwise answer 'no'.";
 
-    private static boolean gameRunning = false;
+    public static void play() {
+        for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
+            setQuestionData();
 
-    public static void startGameLoop() {
-        if (Greet.getUserName() == null) {
-            Greet.greeting();
+            QUESTION[i] = getQuestion();
+            CORRECT_ANSWER[i] = getCorrectAnswer();
         }
 
-        int correctAnswersCount = 0;
-
-        switchGameState();
-        System.out.println("Answer 'yes' if the number is even, otherwise answer 'no'.");
-
-        while (gameRunning) {
-            int question = randomInt(RANDOM_MIN, RANDOM_MAX);
-            boolean isEven = question % 2 == 0;
-
-            System.out.printf("Question: %s\n", question);
-
-            UserAnswer answer = GamesTools.askUser(isEven, correctAnswersCount, MAX_CORRECT_ANSWERS);
-
-            if (answer == UserAnswer.CORRECT) {
-                correctAnswersCount++;
-            } else if (answer == UserAnswer.WRONG || answer == UserAnswer.DONE) {
-                switchGameState();
-            }
-        }
+        Engine.start(GAME_TASK, QUESTION, CORRECT_ANSWER);
     }
 
-    private static void switchGameState() {
-        gameRunning = !gameRunning;
+    private static void setQuestionData() {
+        randomNumber = randomInt(Engine.RANDOM_RANGE);
+    }
+
+    private static String getQuestion() {
+        return String.format(Engine.QUESTION, randomNumber);
+    }
+
+    private static String getCorrectAnswer() {
+        return isEven(randomNumber) ? "yes" : "no";
+    }
+
+    private  static boolean isEven(int number) {
+        return number % 2 == 0;
     }
 }

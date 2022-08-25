@@ -1,94 +1,78 @@
 package hexlet.code.games;
 
-import hexlet.code.commands.Greet;
-import hexlet.code.tools.GamesTools;
-import java.util.Arrays;
+import hexlet.code.Engine;
 
-import static hexlet.code.tools.MathTools.randomInt;
+import static hexlet.code.MathTools.randomInt;
 
 public final class ProgressionGame {
-    public static final int COMMAND_INDEX = 5;
+    private static final int MIN_LENGTH = 5;
 
-    private static final int STEP_RANDOM_MIN = 2;
+    private static final int MAX_LENGTH = 10;
 
-    private static final int STEP_RANDOM_MAX = 6;
+    private static final String GAME_TASK = "What number is missing in the progression?";
 
-    private static final int START_RANDOM_MIN = 3;
+    private static final String[] QUESTION = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static final int START_RANDOM_MAX = 22;
+    private static final String[] CORRECT_ANSWER = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static final int LENGTH_RANDOM_MIN = 5;
+    private static int progressionLength;
 
-    private static final int LENGTH_RANDOM_MAX = 10;
+    private static int skippedPosition;
 
-    private static final int QUESTION_INDEX_RANDOM_MIN = 3;
+    private static int[] progression;
 
-    private static final int MAX_CORRECT_ANSWERS = 3 - 1;
 
-    private static boolean gameRunning = false;
+    public static void play() {
+        for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
+            setQuestionData();
 
-    public static void startGameLoop() {
-        if (Greet.getUserName() == null) {
-            Greet.greeting();
+            QUESTION[i] = getQuestion();
+            CORRECT_ANSWER[i] = getCorrectAnswer();
         }
 
-        int correctAnswersCount = 0;
-
-        switchGameState();
-        System.out.println("What number is missing in the progression?");
-
-        while (gameRunning) {
-            int[] progression = generateProgression();
-
-            int questionIndex = randomInt(QUESTION_INDEX_RANDOM_MIN, progression.length - 1);
-            int correctAnswer = progression[questionIndex];
-
-            System.out.printf("Question: %s\n", progressionToQuestionString(progression, questionIndex));
-
-            UserAnswer answer = GamesTools.askUser(correctAnswer, correctAnswersCount, MAX_CORRECT_ANSWERS);
-
-            if (answer == UserAnswer.CORRECT) {
-                correctAnswersCount++;
-            } else if (answer == UserAnswer.WRONG || answer == UserAnswer.DONE) {
-                switchGameState();
-            }
-        }
+        Engine.start(GAME_TASK, QUESTION, CORRECT_ANSWER);
     }
 
-    private static int[] generateProgression() {
-        int step = randomInt(STEP_RANDOM_MIN, STEP_RANDOM_MAX);
+    private static void setQuestionData() {
+        int firstElement = randomInt(Engine.RANDOM_RANGE);
+        int progressionStep = randomInt(Engine.RANDOM_RANGE);
 
-        int current = randomInt(START_RANDOM_MIN, START_RANDOM_MAX);
-        int length = randomInt(LENGTH_RANDOM_MIN, LENGTH_RANDOM_MAX);
-
-        int[] progression = new int[length];
-
-        for (int i = 0; i < length; i++) {
-            progression[i] = current;
-            current += step;
-        }
-
-        Arrays.sort(progression);
-
-        return progression;
+        progressionLength = randomInt(MAX_LENGTH - MIN_LENGTH) + MIN_LENGTH;
+        skippedPosition = randomInt(progressionLength);
+        progression = getProgression(firstElement, progressionStep);
     }
 
-    private static String progressionToQuestionString(int[] progression, int questionNumberIndex) {
-        int length = progression.length;
-        String[] progressionStringsArray = new String[length];
+    private static String getQuestion() {
+        String sequence = getSequence();
 
-        for (int i = 0; i < length; i++) {
-            if (i == questionNumberIndex) {
-                progressionStringsArray[i] = "..";
-            } else {
-                progressionStringsArray[i] = String.valueOf(progression[i]);
-            }
-        }
-
-        return String.join(" ", progressionStringsArray);
+        return String.format(Engine.QUESTION, sequence);
     }
 
-    private static void switchGameState() {
-        gameRunning = !gameRunning;
+    private static String getCorrectAnswer() {
+        return String.valueOf(progression[skippedPosition]);
+    }
+
+
+    private static int[] getProgression(int first, int step) {
+        int[] sequence = new int[progressionLength];
+        sequence[0] = first;
+
+        for (int i = 1; i < progressionLength; i++) {
+            sequence[i] = sequence[i - 1] + step;
+        }
+
+        return sequence;
+    }
+
+    private static String getSequence() {
+        StringBuilder sequence = new StringBuilder();
+        @SuppressWarnings("UnusedAssignment") String symbol = "";
+
+        for (int i = 0; i < progressionLength; i++) {
+            symbol = (i == skippedPosition) ? ".." : String.valueOf(progression[i]);
+            sequence.append(symbol).append(" ");
+        }
+
+        return sequence.toString();
     }
 }

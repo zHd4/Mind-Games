@@ -1,76 +1,73 @@
 package hexlet.code.games;
 
-import hexlet.code.commands.Greet;
-import hexlet.code.tools.GamesTools;
-import static hexlet.code.tools.MathTools.randomInt;
+import hexlet.code.Engine;
+
+import static hexlet.code.MathTools.randomInt;
 
 public final class CalcGame {
-    public static final int COMMAND_INDEX = 3;
+    private static int operand1;
 
-    private static final int RANDOM_MIN = 22;
+    private static int operand2;
 
-    private static final int RANDOM_MAX = 3333;
+    private static String operator;
 
-    private static final int MAX_CORRECT_ANSWERS = 3 - 1;
+    private static final String[] QUESTION = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static final char[] MATH_OPERATIONS = new char[] {'+', '-', '*'};
+    private static final String[] CORRECT_ANSWER = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static boolean gameRunning = false;
+    private static final int OPERATORS_RANDOM_RANGE = 2;
 
-    public static void startGameLoop() {
-        if (Greet.getUserName() == null) {
-            Greet.greeting();
+    private static final String GAME_TASK = "What is the result of the expression?";
+
+    private static final String QUESTION_FORMAT = Engine.QUESTION + "%s %s";
+
+    public static void play() {
+        for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
+            setQuestionData();
+
+            QUESTION[i] = getQuestion();
+            CORRECT_ANSWER[i] = getCorrectAnswer();
         }
 
-        int correctAnswersCount = 0;
-
-        switchGameState();
-        System.out.println("What is the result of the expression?");
-
-        while (gameRunning) {
-            int firstOperator = randomInt(RANDOM_MIN, RANDOM_MAX);
-            int secondOperator = randomInt(RANDOM_MIN, RANDOM_MAX);
-
-            char operation = MATH_OPERATIONS[randomInt(0, MATH_OPERATIONS.length - 1)];
-
-            int result = calculate(firstOperator, secondOperator, operation);
-
-            System.out.printf("Question: %s %s %s\n", firstOperator, operation, secondOperator);
-
-            UserAnswer answer = GamesTools.askUser(result, correctAnswersCount, MAX_CORRECT_ANSWERS);
-
-            if (answer == UserAnswer.CORRECT) {
-                correctAnswersCount++;
-            } else if (answer == UserAnswer.WRONG || answer == UserAnswer.DONE) {
-                switchGameState();
-            }
-        }
+        Engine.start(GAME_TASK, QUESTION, CORRECT_ANSWER);
     }
 
-    private static int calculate(int firstOperator, int secondOperator, char operation) {
-        int result = 0;
+    private static void setQuestionData() {
+        operand1 = randomInt(Engine.RANDOM_RANGE);
+        operand2 = randomInt(Engine.RANDOM_RANGE);
 
-        switch (operation) {
-            case '+':
-                result = firstOperator + secondOperator;
-                break;
+        operator = getOperator();
+    }
 
-            case '-':
-                result = firstOperator - secondOperator;
-                break;
+    private static String getQuestion() {
+        return String.format(QUESTION_FORMAT, operand1, operator, operand2);
+    }
 
-            case '*':
-                result = firstOperator * secondOperator;
-                break;
-
+    private static String getCorrectAnswer() {
+        switch (operator) {
+            case "+":
+                return String.valueOf(operand1 + operand2);
+            case "-":
+                return String.valueOf(operand1 - operand2);
+            case "*":
+                return String.valueOf(operand1 * operand2);
             default:
-                break;
+                throw new IllegalArgumentException("Unsupported operator: " + operator);
         }
-
-        return result;
     }
 
-    private static void switchGameState() {
-        gameRunning = !gameRunning;
+    private static String getOperator() {
+        int random = randomInt(OPERATORS_RANDOM_RANGE);
+
+        switch (random) {
+            case 0:
+                return "*";
+            case 1:
+                return "+";
+            case 2:
+                return "-";
+            default:
+                throw new IllegalArgumentException("Operator selection error: " + random);
+        }
     }
 }

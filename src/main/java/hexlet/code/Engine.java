@@ -1,32 +1,83 @@
 package hexlet.code;
 
-import hexlet.code.exceptions.InvalidMenuNumberChoiceException;
-
 import java.util.Scanner;
 
 public class Engine {
     private static final Scanner USER_INPUT_SCANNER = new Scanner(System.in);
 
-    public static Integer integerInput(String text) throws InvalidMenuNumberChoiceException {
-        System.out.print(text);
+    public static final int ATTEMPTS_NUMBER = 3;
 
-        String inputResult = USER_INPUT_SCANNER.nextLine();
+    public static final int RANDOM_RANGE = 10;
 
-        try {
-            Integer result = Integer.parseInt(inputResult);
+    public static final String QUESTION = "Question: %s ";
 
-            System.out.print('\n');
-            return result;
-        } catch (NumberFormatException e) {
-            System.out.println("Enter a valid number!\n");
-            throw new InvalidMenuNumberChoiceException();
+    private static final String YOUR_ANSWER = "Your answer: ";
+
+    private static final String CORRECT = "Correct!";
+
+    private static final String CONGRATS = "Congratulations, %s!";
+
+    private static final String WRONG_ANSWER = "'%s' is wrong answer ;(. Correct answer was '%s'";
+
+    private static final String TRY_AGAIN = "Let's try again, %s!";
+
+    private static final String WELCOME = "Welcome to the Brain Games!";
+
+    private static String userName = null;
+
+    public static void start(String gameTask, String[] question, String[] correctAnswer) {
+        meetUser();
+
+        int attempt = 0;
+
+        while (attempt < ATTEMPTS_NUMBER) {
+            if (attempt == 0) {
+                showUserMessage(gameTask);
+            }
+
+            showUserMessage(question[attempt]);
+
+            String userAnswer = getUserAnswer(YOUR_ANSWER);
+
+            if (userAnswer.equals(correctAnswer[attempt])) {
+                String positiveResult = getPositiveResult(attempt + 1);
+                showUserMessage(positiveResult);
+                attempt++;
+            } else {
+                String negativeResult = getNegativeResult(userAnswer, correctAnswer[attempt]);
+                showUserMessage(negativeResult);
+                attempt = ATTEMPTS_NUMBER;
+            }
         }
     }
 
-    public static boolean inputYesNo(String text) {
+    public static void meetUser() {
+        System.out.println(WELCOME);
+
+        userName = Cli.getUserName();
+        System.out.printf("Hello, %s!\n", userName);
+    }
+
+    public static String getUserAnswer(String text) {
         System.out.print(text);
 
-        String inputResult = USER_INPUT_SCANNER.nextLine().toLowerCase();
-        return inputResult.equals("yes");
+        return USER_INPUT_SCANNER.nextLine();
+    }
+
+    private static void showUserMessage(String userMessage) {
+        System.out.println(userMessage);
+    }
+
+    private static String getPositiveResult(int attempt) {
+        String positiveResult = String.format(CONGRATS, userName);
+
+        return (attempt == ATTEMPTS_NUMBER) ? String.format("%s\n%s", CORRECT, positiveResult) : CORRECT;
+    }
+
+    private static String getNegativeResult(String userAnswer, String correctAnswer) {
+        String wrongAnswer = String.format(WRONG_ANSWER, userAnswer, correctAnswer);
+        String goodbye = String.format(TRY_AGAIN, userName);
+
+        return String.format("%s\n%s", wrongAnswer, goodbye);
     }
 }

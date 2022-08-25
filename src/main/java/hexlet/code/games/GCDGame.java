@@ -1,61 +1,54 @@
 package hexlet.code.games;
 
-import hexlet.code.commands.Greet;
-import hexlet.code.tools.GamesTools;
-import static hexlet.code.tools.MathTools.randomInt;
+import hexlet.code.Engine;
+
+import static hexlet.code.MathTools.randomInt;
 
 public final class GCDGame {
-    public static final int COMMAND_INDEX = 4;
+    private static int num1;
 
-    private static final int RANDOM_MIN = 22;
+    private static int num2;
 
-    private static final int RANDOM_MAX = 3333;
+    private static final String[] QUESTION = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static final int MAX_CORRECT_ANSWERS = 3 - 1;
+    private static final String[] CORRECT_ANSWER = new String[Engine.ATTEMPTS_NUMBER];
 
-    private static boolean gameRunning = false;
+    private static final String GAME_TASK = "Find the greatest common divisor of given numbers.";
 
-    public static void startGameLoop() {
-        if (Greet.getUserName() == null) {
-            Greet.greeting();
+    private static final String QUESTION_FORMAT = Engine.QUESTION + "%s";
+
+    public static void play() {
+        for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
+            setQuestionData();
+
+            QUESTION[i] = getQuestion();
+            CORRECT_ANSWER[i] = getCorrectAnswer();
         }
 
-        int correctAnswersCount = 0;
-
-        switchGameState();
-        System.out.println("Find the greatest common divisor of given numbers.");
-
-        while (gameRunning) {
-            int a = randomInt(RANDOM_MIN, RANDOM_MAX);
-            int b = randomInt(RANDOM_MIN, RANDOM_MAX);
-
-            int gcd = getGcd(a, b);
-
-            System.out.printf("Question: %s %s\n", a, b);
-
-            UserAnswer answer = GamesTools.askUser(gcd, correctAnswersCount, MAX_CORRECT_ANSWERS);
-
-            if (answer == UserAnswer.CORRECT) {
-                correctAnswersCount++;
-            } else if (answer == UserAnswer.WRONG || answer == UserAnswer.DONE) {
-                switchGameState();
-            }
-        }
+        Engine.start(GAME_TASK, QUESTION, CORRECT_ANSWER);
     }
 
-    private static int getGcd(final int a, final int b) {
-        int gcd = 1;
-
-        for (int i = 1; i <= a && i <= b; i++) {
-            if (a % i == 0 && b % i == 0) {
-                gcd = i;
-            }
-        }
-
-        return gcd;
+    private static void setQuestionData() {
+        num1 = randomInt(Engine.RANDOM_RANGE);
+        num2 = randomInt(Engine.RANDOM_RANGE);
     }
 
-    private static void switchGameState() {
-        gameRunning = !gameRunning;
+    private static String getQuestion() {
+        return String.format(QUESTION_FORMAT, num1, num2);
+    }
+
+    private static String getCorrectAnswer() {
+        int result = getGCD(num1, num2);
+
+        return String.valueOf(result);
+    }
+
+
+    private static int getGCD(int p, int q) {
+        if (q == 0) {
+            return p;
+        }
+
+        return getGCD(q, p % q);
     }
 }

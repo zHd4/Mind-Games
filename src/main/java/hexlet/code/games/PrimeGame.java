@@ -7,9 +7,7 @@ import static hexlet.code.MathTools.randomInt;
 public final class PrimeGame {
     private static int randomNumber;
 
-    private static final String[] QUESTION = new String[Engine.ATTEMPTS_NUMBER];
-
-    private static final String[] CORRECT_ANSWER = new String[Engine.ATTEMPTS_NUMBER];
+    private static final String[][] GAME_DATA = new String[Engine.ATTEMPTS_NUMBER][];
 
     private static final String GAME_TASK = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
 
@@ -17,12 +15,10 @@ public final class PrimeGame {
     public static void play() {
         for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
             setQuestionData();
-
-            QUESTION[i] = getQuestion();
-            CORRECT_ANSWER[i] = getCorrectAnswer();
+            GAME_DATA[i] = new String[] {getQuestion(), getCorrectAnswer()};
         }
 
-        Engine.start(GAME_TASK, QUESTION, CORRECT_ANSWER);
+        Engine.start(GAME_TASK, GAME_DATA);
     }
 
     private static void setQuestionData() {

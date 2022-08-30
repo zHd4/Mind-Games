@@ -25,26 +25,31 @@ public class Engine {
 
     private static String userName = null;
 
-    public static void start(String gameTask, String[] question, String[] correctAnswer) {
+    public static void start(String gameTask, String[][] gameData) {
         meetUser();
 
         int attempt = 0;
 
         while (attempt < ATTEMPTS_NUMBER) {
+            String question = gameData[attempt][0];
+            String correctAnswer = gameData[attempt][1];
+
             if (attempt == 0) {
                 showUserMessage(gameTask);
             }
 
-            showUserMessage(question[attempt]);
+            showUserMessage(question);
 
             String userAnswer = getUserAnswer(YOUR_ANSWER);
 
-            if (userAnswer.equals(correctAnswer[attempt])) {
+            if (userAnswer.equals(correctAnswer)) {
                 String positiveResult = getPositiveResult(attempt + 1);
+
                 showUserMessage(positiveResult);
                 attempt++;
             } else {
-                String negativeResult = getNegativeResult(userAnswer, correctAnswer[attempt]);
+                String negativeResult = getNegativeResult(userAnswer, correctAnswer);
+
                 showUserMessage(negativeResult);
                 attempt = ATTEMPTS_NUMBER;
             }

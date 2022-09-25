@@ -6,7 +6,6 @@
  */
 
 plugins {
-    id 'com.github.ben-manes.versions' version '0.38.0'
     id 'application'
     id 'checkstyle'
 }
@@ -25,7 +24,7 @@ run {
 }
 
 checkstyle {
-    configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    configFile = file("checkstyle.xml")
 
     checkstyleMain {
         source = sourceSets.main.allSource

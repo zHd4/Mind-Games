@@ -24,8 +24,6 @@ run {
 }
 
 checkstyle {
-    configFile = file("checkstyle.xml")
-
     checkstyleMain {
         source = sourceSets.main.allSource
     }

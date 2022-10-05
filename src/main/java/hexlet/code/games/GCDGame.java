@@ -1,6 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.GameData;
 
 import static hexlet.code.MathTools.randomInt;
 
@@ -9,28 +10,29 @@ public final class GCDGame {
 
     private static int num2;
 
-    private static final String[][] GAME_DATA = new String[Engine.ATTEMPTS_NUMBER][];
-
     private static final String GAME_TASK = "Find the greatest common divisor of given numbers.";
 
-    private static final String QUESTION_FORMAT = Engine.QUESTION + "%s";
-
     public static void play() {
+        GameData gameData = new GameData();
+
+        String[][] questionsArgs = new String[Engine.ATTEMPTS_NUMBER][];
+        String[] correctAnswers = new String[Engine.ATTEMPTS_NUMBER];
+
         for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
-            setQuestionData();
-            GAME_DATA[i] = new String[] {getQuestion(), getCorrectAnswer()};
+            num1 = randomInt(Engine.RANDOM_RANGE);
+            num2 = randomInt(Engine.RANDOM_RANGE);
+
+            String[] args = new String[] {String.valueOf(num1), String.valueOf(num2)};
+
+            questionsArgs[i] = args;
+            correctAnswers[i] = getCorrectAnswer();
         }
 
-        Engine.start(GAME_TASK, GAME_DATA);
-    }
+        gameData.setGameTask(GAME_TASK);
+        gameData.setQuestionsArgs(questionsArgs);
+        gameData.setCorrectAnswers(correctAnswers);
 
-    private static void setQuestionData() {
-        num1 = randomInt(Engine.RANDOM_RANGE);
-        num2 = randomInt(Engine.RANDOM_RANGE);
-    }
-
-    private static String getQuestion() {
-        return String.format(QUESTION_FORMAT, num1, num2);
+        Engine.start(gameData);
     }
 
     private static String getCorrectAnswer() {

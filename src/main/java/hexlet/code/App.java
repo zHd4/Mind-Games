@@ -21,15 +21,15 @@ public class App {
             System.out.println("0 - Exit");
 
             executeGame(Engine.getUserAnswer("Your choice: "));
-        }  catch (NullPointerException e) {
-            System.out.println("Wrong choice!\n");
+        }  catch (RuntimeException e) {
+            System.out.println(e.getMessage() + "\n");
         }
     }
 
     private static void executeGame(String chosenGame) {
         switch (chosenGame) {
             case "1":
-                Engine.meetUser();
+                Cli.greet();
                 break;
             case "2":
                 EvenGame.play();
@@ -50,7 +50,7 @@ public class App {
                 System.exit(0);
                 break;
             default:
-                throw new NullPointerException();
+                throw new RuntimeException("Wrong choice!");
         }
     }
 }

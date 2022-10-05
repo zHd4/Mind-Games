@@ -1,31 +1,32 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.GameData;
 
 import static hexlet.code.MathTools.randomInt;
 
 public final class EvenGame  {
     private static int randomNumber;
 
-    private static final String[][] GAME_DATA = new String[Engine.ATTEMPTS_NUMBER][];
-
     private static final String GAME_TASK = "Answer 'yes' if number even otherwise answer 'no'.";
 
     public static void play() {
+        GameData gameData = new GameData();
+
+        String[][] questionsArgs = new String[Engine.ATTEMPTS_NUMBER][];
+        String[] correctAnswers = new String[Engine.ATTEMPTS_NUMBER];
+
         for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
-            setQuestionData();
-            GAME_DATA[i] = new String[] {getQuestion(), getCorrectAnswer()};
+            randomNumber = randomInt(Engine.RANDOM_RANGE);
+            questionsArgs[i] = new String[] {String.valueOf(randomNumber)};
+            correctAnswers[i] = getCorrectAnswer();
         }
 
-        Engine.start(GAME_TASK, GAME_DATA);
-    }
+        gameData.setGameTask(GAME_TASK);
+        gameData.setQuestionsArgs(questionsArgs);
+        gameData.setCorrectAnswers(correctAnswers);
 
-    private static void setQuestionData() {
-        randomNumber = randomInt(Engine.RANDOM_RANGE);
-    }
-
-    private static String getQuestion() {
-        return String.format(Engine.QUESTION, randomNumber);
+        Engine.start(gameData);
     }
 
     private static String getCorrectAnswer() {

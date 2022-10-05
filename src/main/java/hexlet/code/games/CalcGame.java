@@ -1,6 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.GameData;
 
 import static hexlet.code.MathTools.randomInt;
 
@@ -11,32 +12,33 @@ public final class CalcGame {
 
     private static String operator;
 
-    private static final String[][] GAME_DATA = new String[Engine.ATTEMPTS_NUMBER][];
-
     private static final int OPERATORS_RANDOM_RANGE = 2;
 
     private static final String GAME_TASK = "What is the result of the expression?";
 
-    private static final String QUESTION_FORMAT = Engine.QUESTION + "%s %s";
-
     public static void play() {
+        GameData gameData = new GameData();
+
+        String[][] questionsArgs = new String[Engine.ATTEMPTS_NUMBER][];
+        String[] correctAnswers = new String[Engine.ATTEMPTS_NUMBER];
+
         for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
-            setQuestionData();
-            GAME_DATA[i] = new String[] {getQuestion(), getCorrectAnswer()};
+            operand1 = randomInt(Engine.RANDOM_RANGE);
+            operand2 = randomInt(Engine.RANDOM_RANGE);
+
+            operator = getOperator();
+
+            String[] args = new String[] {String.valueOf(operand1), operator, String.valueOf(operand2)};
+
+            questionsArgs[i] = args;
+            correctAnswers[i] = getCorrectAnswer();
         }
 
-        Engine.start(GAME_TASK, GAME_DATA);
-    }
+        gameData.setGameTask(GAME_TASK);
+        gameData.setQuestionsArgs(questionsArgs);
+        gameData.setCorrectAnswers(correctAnswers);
 
-    private static void setQuestionData() {
-        operand1 = randomInt(Engine.RANDOM_RANGE);
-        operand2 = randomInt(Engine.RANDOM_RANGE);
-
-        operator = getOperator();
-    }
-
-    private static String getQuestion() {
-        return String.format(QUESTION_FORMAT, operand1, operator, operand2);
+        Engine.start(gameData);
     }
 
     private static String getCorrectAnswer() {

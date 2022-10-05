@@ -3,13 +3,11 @@ package hexlet.code;
 import java.util.Scanner;
 
 public class Engine {
-    private static final Scanner USER_INPUT_SCANNER = new Scanner(System.in);
-
     public static final int ATTEMPTS_NUMBER = 3;
 
     public static final int RANDOM_RANGE = 10;
 
-    public static final String QUESTION = "Question: %s ";
+    public static final String QUESTION = "Question: ";
 
     private static final String YOUR_ANSWER = "Your answer: ";
 
@@ -21,21 +19,22 @@ public class Engine {
 
     private static final String TRY_AGAIN = "Let's try again, %s!";
 
-    private static final String WELCOME = "Welcome to the Brain Games!";
-
-    private static String userName = null;
-
-    public static void start(String gameTask, String[][] gameData) {
-        meetUser();
+    public static void start(GameData gameData) {
+        if (Cli.getUserName() == null) {
+            Cli.greet();
+        }
 
         int attempt = 0;
 
+        String[][] questionArgs = gameData.getQuestionsArgs();
+        String[] correctAnswers = gameData.getCorrectAnswers();
+
         while (attempt < ATTEMPTS_NUMBER) {
-            String question = gameData[attempt][0];
-            String correctAnswer = gameData[attempt][1];
+            String question = QUESTION + String.join(" ", questionArgs[attempt]);
+            String correctAnswer = correctAnswers[attempt];
 
             if (attempt == 0) {
-                showUserMessage(gameTask);
+                showUserMessage(gameData.getGameTask());
             }
 
             showUserMessage(question);
@@ -56,17 +55,11 @@ public class Engine {
         }
     }
 
-    public static void meetUser() {
-        System.out.println(WELCOME);
-
-        userName = Cli.getUserName();
-        System.out.printf("Hello, %s!\n", userName);
-    }
-
     public static String getUserAnswer(String text) {
+        Scanner scanner = new Scanner(System.in);
         System.out.print(text);
 
-        return USER_INPUT_SCANNER.nextLine();
+        return scanner.nextLine();
     }
 
     private static void showUserMessage(String userMessage) {
@@ -74,14 +67,14 @@ public class Engine {
     }
 
     private static String getPositiveResult(int attempt) {
-        String positiveResult = String.format(CONGRATS, userName);
+        String positiveResult = String.format(CONGRATS, Cli.getUserName());
 
         return (attempt == ATTEMPTS_NUMBER) ? String.format("%s\n%s", CORRECT, positiveResult) : CORRECT;
     }
 
     private static String getNegativeResult(String userAnswer, String correctAnswer) {
         String wrongAnswer = String.format(WRONG_ANSWER, userAnswer, correctAnswer);
-        String goodbye = String.format(TRY_AGAIN, userName);
+        String goodbye = String.format(TRY_AGAIN, Cli.getUserName());
 
         return String.format("%s\n%s", wrongAnswer, goodbye);
     }

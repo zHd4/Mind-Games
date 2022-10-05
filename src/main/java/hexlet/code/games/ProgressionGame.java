@@ -1,6 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.GameData;
 
 import static hexlet.code.MathTools.randomInt;
 
@@ -15,34 +16,30 @@ public final class ProgressionGame {
 
     private static final String GAME_TASK = "What number is missing in the progression?";
 
-    private static final String[][] GAME_DATA = new String[Engine.ATTEMPTS_NUMBER][];
 
     public static void play() {
-        for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
-            setQuestionData();
+        GameData gameData = new GameData();
 
-            GAME_DATA[i] = new String[] {
-                    getQuestion(progression, skippedPosition),
-                    getCorrectAnswer()
-            };
+        String[][] questionsArgs = new String[Engine.ATTEMPTS_NUMBER][];
+        String[] correctAnswers = new String[Engine.ATTEMPTS_NUMBER];
+
+        for (int i = 0; i < Engine.ATTEMPTS_NUMBER; i++) {
+            int firstElement = randomInt(Engine.RANDOM_RANGE);
+            int progressionStep = randomInt(Engine.RANDOM_RANGE);
+            int progressionLength = randomInt(MAX_LENGTH - MIN_LENGTH) + MIN_LENGTH;
+
+            skippedPosition = randomInt(progressionLength);
+            progression = getProgression(firstElement, progressionStep, progressionLength);
+
+            questionsArgs[i] = new String[] {getSequence(progression, skippedPosition)};
+            correctAnswers[i] = getCorrectAnswer();
         }
 
-        Engine.start(GAME_TASK, GAME_DATA);
-    }
+        gameData.setGameTask(GAME_TASK);
+        gameData.setQuestionsArgs(questionsArgs);
+        gameData.setCorrectAnswers(correctAnswers);
 
-    private static void setQuestionData() {
-        int firstElement = randomInt(Engine.RANDOM_RANGE);
-        int progressionStep = randomInt(Engine.RANDOM_RANGE);
-        int progressionLength = randomInt(MAX_LENGTH - MIN_LENGTH) + MIN_LENGTH;
-
-        skippedPosition = randomInt(progressionLength);
-        progression = getProgression(firstElement, progressionStep, progressionLength);
-    }
-
-    private static String getQuestion(final int[] data, final int question) {
-        String sequence = getSequence(data, question);
-
-        return String.format(Engine.QUESTION, sequence);
+        Engine.start(gameData);
     }
 
     private static String getCorrectAnswer() {

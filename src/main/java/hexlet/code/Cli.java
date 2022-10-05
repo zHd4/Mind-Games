@@ -4,20 +4,20 @@ import java.util.Scanner;
 
 public class Cli {
     public static String getUserName() {
-        String userName = null;
-        Scanner userInputScanner = new Scanner(System.in);
-
-        while (userName == null) {
-            System.out.print("May I have your name? ");
-
-            String inputResult = userInputScanner.nextLine();
-
-            if (inputResult.length() > 0) {
-                userName = inputResult;
-            }
-        }
-
         return userName;
+    }
+
+    private static String userName;
+
+    public static void greet() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the Brain Games!");
+        System.out.print("May I have your name? ");
+
+        userName = scanner.next();
+
+        System.out.println("Hello, " + userName + "!");
     }
 }
 

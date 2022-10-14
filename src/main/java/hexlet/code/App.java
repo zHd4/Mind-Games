@@ -27,15 +27,31 @@ public class App {
     }
 
     private static void executeGame(String chosenGame) {
+        //noinspection EnhancedSwitchMigration
         switch (chosenGame) {
-            case "1" -> Cli.greet();
-            case "2" -> EvenGame.play();
-            case "3" -> CalcGame.play();
-            case "4" -> GCDGame.play();
-            case "5" -> ProgressionGame.play();
-            case "6" -> PrimeGame.play();
-            case "0" -> System.exit(0);
-            default -> throw new RuntimeException("Wrong choice!");
+            case "1":
+                Cli.greet();
+                break;
+            case "2":
+                EvenGame.play();
+                break;
+            case "3":
+                CalcGame.play();
+                break;
+            case "4":
+                GCDGame.play();
+                break;
+            case "5":
+                ProgressionGame.play();
+                break;
+            case "6":
+                PrimeGame.play();
+                break;
+            case "0":
+                System.exit(0);
+                break;
+            default:
+                throw new RuntimeException("Wrong choice!");
         }
     }
 }

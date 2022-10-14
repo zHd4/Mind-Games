@@ -1,8 +1,10 @@
 install-dist:
-	make -C app install-dist
+	./gradlew installDist
 
 run-dist:
-	make -C app run-dist
+	./build/install/app/bin/app
 
 build-run-dist:
-	make -C app build-run-dist
+	./gradlew build
+	./gradlew installDist
+	./build/install/app/bin/app

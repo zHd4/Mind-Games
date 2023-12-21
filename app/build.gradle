@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'checkstyle'
 }
 
 group = 'hexlet.code'
@@ -15,6 +16,11 @@ application {
 
 compileJava {
     options.release = 20
+}
+
+checkstyle {
+    toolVersion = '10.12.4'
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 }
 
 run {

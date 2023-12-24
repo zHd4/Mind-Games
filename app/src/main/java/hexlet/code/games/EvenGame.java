@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EvenGame implements Game {
+public final class EvenGame implements Game {
     private static final String RULES = "Answer 'yes' if the number is even, otherwise answer 'no'.";
     private static final int MAX_NUMBER = 999;
 

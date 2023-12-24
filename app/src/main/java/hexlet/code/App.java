@@ -1,12 +1,18 @@
 package hexlet.code;
 
-import hexlet.code.games.*;
+
+import hexlet.code.games.Game;
+import hexlet.code.games.EvenGame;
+import hexlet.code.games.CalculatorGame;
+import hexlet.code.games.GCDGame;
+import hexlet.code.games.ProgressionGame;
+import hexlet.code.games.PrimeGame;
 
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class App {
+public final class App {
     private static final Map<Integer, Game> GAMES_MAP = Map.of(
             2, new EvenGame(),
             3, new CalculatorGame(),

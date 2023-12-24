@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class ProgressionGame implements Game {
+public final class ProgressionGame implements Game {
     private static final String RULES = "What number is missing in the progression?";
     public static final int MAX_START = 40;
     public static final int MAX_STEP = 5;
@@ -19,7 +19,11 @@ public class ProgressionGame implements Game {
         List<Integer> progression = new ArrayList<>();
 
         int current = start;
-        for (int i = 0; i < length; i++) progression.add(current += step);
+
+        for (int i = 0; i < length; i++) {
+            current += step;
+            progression.add(current);
+        }
 
         return progression;
     }

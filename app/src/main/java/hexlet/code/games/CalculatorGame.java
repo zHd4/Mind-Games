@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CalculatorGame implements Game {
+public final class CalculatorGame implements Game {
     private static final String RULES = "What is the result of the expression?";
     private static final int MAX_NUMBER = 100;
 
@@ -27,10 +27,12 @@ public class CalculatorGame implements Game {
 
             int answer = 0;
 
-            switch (operator) {
-                case '+' -> answer = number1 + number2;
-                case '-' -> answer = number1 - number2;
-                case '*' -> answer = number1 * number2;
+            if (operator == '+') {
+                answer = number1 + number2;
+            } else if (operator == '-') {
+                answer = number1 - number2;
+            } else if (operator == '*') {
+                answer = number1 * number2;
             }
 
             rounds.add(new Round(question, String.valueOf(answer)));

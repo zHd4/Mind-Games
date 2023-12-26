@@ -25,16 +25,14 @@ public final class App {
         System.out.print("Your choice: ");
 
         try (Scanner scanner = new Scanner(System.in)) {
-            int number = scanner.nextInt();
-
-            switch (number) {
-                case 1 -> Cli.greeting();
-                case 2 -> EvenGame.run();
-                case 3 -> CalculatorGame.run();
-                case 4 -> GCDGame.run();
-                case 5 -> ProgressionGame.run();
-                case 6 -> PrimeGame.run();
-                case 0 -> System.exit(0);
+            switch (scanner.next()) {
+                case "1" -> Cli.greeting();
+                case "2" -> EvenGame.run();
+                case "3" -> CalculatorGame.run();
+                case "4" -> GCDGame.run();
+                case "5" -> ProgressionGame.run();
+                case "6" -> PrimeGame.run();
+                case "0" -> System.exit(0);
                 default -> System.out.println("Wrong game number! Exit.");
             }
         }

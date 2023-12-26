@@ -1,11 +1,12 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import hexlet.code.Round;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public final class ProgressionGame {
@@ -36,7 +37,7 @@ public final class ProgressionGame {
 
     public static void run() {
         Random random = new Random();
-        List<Round> rounds = new ArrayList<>();
+        Map<String, String> rounds = new HashMap<>();
 
         for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
             int start = random.nextInt(1, MAX_START) + 1;
@@ -50,7 +51,7 @@ public final class ProgressionGame {
             String question = progressionToString(progression, questionIndex);
             String answer = progression.get(questionIndex).toString();
 
-            rounds.add(new Round(question, answer));
+            rounds.put(question, answer);
         }
 
         Engine.start(rounds, RULES);

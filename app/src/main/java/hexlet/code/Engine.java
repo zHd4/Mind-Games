@@ -1,12 +1,13 @@
 package hexlet.code;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public final class Engine {
     public static final int ROUNDS_COUNT = 3;
 
-    public static void start(List<Round> rounds, String rules) {
+    public static void start(Map<String, String> rounds, String rules) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Welcome to the Brain Games!");
             System.out.print("May I have your name? ");
@@ -16,12 +17,14 @@ public final class Engine {
             System.out.printf("Hello, %s!\n", username);
             System.out.println(rules);
 
-            for (Round round : rounds) {
-                System.out.println("Question: " + round.question());
+            for (Map.Entry<String, String> round : rounds.entrySet()) {
+                String question = round.getKey();
+                String correctAnswer = round.getValue();
+
+                System.out.println("Question: " + question);
                 System.out.print("Your answer: ");
 
                 String userAnswer = scanner.next();
-                String correctAnswer = round.answer();
 
                 if (!userAnswer.equals(correctAnswer)) {
                     System.out.printf("'%s' is wrong answer ;(. Correct answer was '%s'.\n", userAnswer, correctAnswer);

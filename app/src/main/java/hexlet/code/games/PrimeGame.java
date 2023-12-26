@@ -1,11 +1,11 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import hexlet.code.Round;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Random;
+
 
 public final class PrimeGame {
     private static final String RULES = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
@@ -27,7 +27,7 @@ public final class PrimeGame {
 
     public static void run() {
         Random random = new Random();
-        List<Round> rounds = new ArrayList<>();
+        Map<String, String> rounds = new HashMap<>();
 
         for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
             int number = random.nextInt(MAX_NUMBER) + 1;
@@ -35,7 +35,7 @@ public final class PrimeGame {
             String question = String.valueOf(number);
             String answer = isPrime(number) ? "yes" : "no";
 
-            rounds.add(new Round(question, answer));
+            rounds.put(question, answer);
         }
 
         Engine.start(rounds, RULES);

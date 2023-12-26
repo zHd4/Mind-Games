@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public final class EvenGame implements Game {
+public final class EvenGame {
     private static final String RULES = "Answer 'yes' if the number is even, otherwise answer 'no'.";
     private static final int MAX_NUMBER = 999;
 
-    @Override
-    public void run() {
+    public static void run() {
         Random random = new Random();
         List<Round> rounds = new ArrayList<>();
 
@@ -20,7 +19,7 @@ public final class EvenGame implements Game {
             int number = random.nextInt(MAX_NUMBER) + 1;
 
             String question = String.valueOf(number);
-            String answer = number % 2 == 0 ? "yes" : "no";
+            String answer = isEven(number) ? "yes" : "no";
 
             rounds.add(new Round(question, answer));
         }
@@ -28,8 +27,7 @@ public final class EvenGame implements Game {
         Engine.start(rounds, RULES);
     }
 
-    @Override
-    public String toString() {
-        return "Even";
+    private static boolean isEven(int number) {
+        return number % 2 == 0;
     }
 }

@@ -35,6 +35,7 @@ public final class App {
                 case 5 -> ProgressionGame.run();
                 case 6 -> PrimeGame.run();
                 case 0 -> System.exit(0);
+                default -> System.out.println("Wrong game number! Exit.");
             }
         }
     }

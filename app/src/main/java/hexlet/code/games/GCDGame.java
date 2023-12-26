@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public final class GCDGame implements Game {
+public final class GCDGame {
     private static final String RULES = "Find the greatest common divisor of given numbers.";
     private static final int MAX_NUMBER = 100;
 
@@ -23,8 +23,7 @@ public final class GCDGame implements Game {
         return number1 + number2;
     }
 
-    @Override
-    public void run() {
+    public static void run() {
         Random random = new Random();
         List<Round> rounds = new ArrayList<>();
 
@@ -39,10 +38,5 @@ public final class GCDGame implements Game {
         }
 
         Engine.start(rounds, RULES);
-    }
-
-    @Override
-    public String toString() {
-        return "GCD";
     }
 }

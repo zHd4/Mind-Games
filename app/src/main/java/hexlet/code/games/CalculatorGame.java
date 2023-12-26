@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public final class CalculatorGame implements Game {
+public final class CalculatorGame {
     private static final String RULES = "What is the result of the expression?";
     private static final int MAX_NUMBER = 100;
 
-    @Override
-    public void run() {
+    public static void run() {
         Random random = new Random();
 
         List<Character> operators = List.of('+', '-', '*');
@@ -23,17 +22,9 @@ public final class CalculatorGame implements Game {
             int number2 = random.nextInt(MAX_NUMBER) + 1;
 
             Character operator = operators.get(random.nextInt(operators.size()));
+
             String question = String.format("%s %s %s", number1, operator, number2);
-
-            int answer = 0;
-
-            if (operator == '+') {
-                answer = number1 + number2;
-            } else if (operator == '-') {
-                answer = number1 - number2;
-            } else if (operator == '*') {
-                answer = number1 * number2;
-            }
+            int answer = calculate(number1, number2, operator);
 
             rounds.add(new Round(question, String.valueOf(answer)));
         }
@@ -41,8 +32,19 @@ public final class CalculatorGame implements Game {
         Engine.start(rounds, RULES);
     }
 
-    @Override
-    public String toString() {
-        return "Calc";
+    private static int calculate(int number1, int number2, char operator) {
+        int result;
+
+        if (operator == '+') {
+            result = number1 + number2;
+        } else if (operator == '-') {
+            result = number1 - number2;
+        } else if (operator == '*') {
+            result = number1 * number2;
+        } else {
+            throw new RuntimeException("Invalid operator");
+        }
+
+        return result;
     }
 }

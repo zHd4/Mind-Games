@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public final class PrimeGame implements Game {
+public final class PrimeGame {
     private static final String RULES = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
     private static final int MAX_NUMBER = 999;
 
@@ -25,8 +25,7 @@ public final class PrimeGame implements Game {
         return true;
     }
 
-    @Override
-    public void run() {
+    public static void run() {
         Random random = new Random();
         List<Round> rounds = new ArrayList<>();
 
@@ -40,10 +39,5 @@ public final class PrimeGame implements Game {
         }
 
         Engine.start(rounds, RULES);
-    }
-
-    @Override
-    public String toString() {
-        return "Prime";
     }
 }

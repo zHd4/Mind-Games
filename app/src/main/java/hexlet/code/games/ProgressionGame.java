@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public final class ProgressionGame implements Game {
+public final class ProgressionGame {
     private static final String RULES = "What number is missing in the progression?";
     public static final int MAX_START = 40;
     public static final int MAX_STEP = 5;
@@ -34,8 +34,7 @@ public final class ProgressionGame implements Game {
                 .collect(Collectors.joining(" "));
     }
 
-    @Override
-    public void run() {
+    public static void run() {
         Random random = new Random();
         List<Round> rounds = new ArrayList<>();
 
@@ -55,10 +54,5 @@ public final class ProgressionGame implements Game {
         }
 
         Engine.start(rounds, RULES);
-    }
-
-    @Override
-    public String toString() {
-        return "Progression";
     }
 }

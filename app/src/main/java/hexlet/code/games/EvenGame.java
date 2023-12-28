@@ -2,7 +2,8 @@ package hexlet.code.games;
 
 import hexlet.code.Engine;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ public final class EvenGame {
 
     public static void run() {
         Random random = new Random();
-        Map<String, String> rounds = new HashMap<>();
+        List<Map<String, String>> rounds = new ArrayList<>();
 
         for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
             int number = random.nextInt(MAX_NUMBER) + 1;
@@ -20,7 +21,7 @@ public final class EvenGame {
             String question = String.valueOf(number);
             String answer = isEven(number) ? "yes" : "no";
 
-            rounds.put(question, answer);
+            rounds.add(Map.of("question", question, "answer", answer));
         }
 
         Engine.start(rounds, RULES);

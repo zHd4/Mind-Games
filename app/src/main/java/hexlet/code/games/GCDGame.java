@@ -2,9 +2,10 @@ package hexlet.code.games;
 
 import hexlet.code.Engine;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.Random;
 
 public final class GCDGame {
     private static final String RULES = "Find the greatest common divisor of given numbers.";
@@ -24,7 +25,7 @@ public final class GCDGame {
 
     public static void run() {
         Random random = new Random();
-        Map<String, String> rounds = new HashMap<>();
+        List<Map<String, String>> rounds = new ArrayList<>();
 
         for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
             int number1 = random.nextInt(MAX_NUMBER) + 1;
@@ -33,7 +34,7 @@ public final class GCDGame {
             int answer = getGcd(number1, number2);
 
             String question = String.format("%s %s", number1, number2);
-            rounds.put(question, String.valueOf(answer));
+            rounds.add(Map.of("question", question, "answer", String.valueOf(answer)));
         }
 
         Engine.start(rounds, RULES);

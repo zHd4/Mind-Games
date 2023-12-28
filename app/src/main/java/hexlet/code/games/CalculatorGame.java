@@ -3,8 +3,8 @@ package hexlet.code.games;
 import hexlet.code.Engine;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Random;
 
 public final class CalculatorGame {
@@ -15,7 +15,7 @@ public final class CalculatorGame {
         Random random = new Random();
 
         List<Character> operators = List.of('+', '-', '*');
-        Map<String, String> rounds = new HashMap<>();
+        List<Map<String, String>> rounds = new ArrayList<>();
 
         for (int i = 0; i < Engine.ROUNDS_COUNT; i++) {
             int number1 = random.nextInt(MAX_NUMBER) + 1;
@@ -26,7 +26,7 @@ public final class CalculatorGame {
             String question = String.format("%s %s %s", number1, operator, number2);
             int answer = calculate(number1, number2, operator);
 
-            rounds.put(question, String.valueOf(answer));
+            rounds.add(Map.of("question", question, "answer", String.valueOf(answer)));
         }
 
         Engine.start(rounds, RULES);

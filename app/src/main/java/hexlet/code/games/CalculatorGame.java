@@ -19,7 +19,7 @@ public final class CalculatorGame {
             int number1 = Utils.getRandomInt(1, MAX_NUMBER);
             int number2 = Utils.getRandomInt(1, MAX_NUMBER);
 
-            Character operator = operators.get(Utils.getRandomInt(0, operators.size()));
+            Character operator = operators.get(Utils.getRandomInt(0, operators.size() - 1));
 
             String question = String.format("%s %s %s", number1, operator, number2);
             int answer = calculate(number1, number2, operator);

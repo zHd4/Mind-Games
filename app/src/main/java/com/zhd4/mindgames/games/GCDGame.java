@@ -1,7 +1,7 @@
-package hexlet.code.games;
+package com.zhd4.mindgames.games;
 
-import hexlet.code.Engine;
-import hexlet.code.Utils;
+import com.zhd4.mindgames.Engine;
+import com.zhd4.mindgames.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

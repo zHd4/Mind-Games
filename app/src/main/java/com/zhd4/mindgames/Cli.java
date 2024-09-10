@@ -1,4 +1,4 @@
-package hexlet.code;
+package com.zhd4.mindgames;
 
 import java.util.Scanner;
 

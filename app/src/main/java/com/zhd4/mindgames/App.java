@@ -1,11 +1,11 @@
-package hexlet.code;
+package com.zhd4.mindgames;
 
 
-import hexlet.code.games.EvenGame;
-import hexlet.code.games.CalculatorGame;
-import hexlet.code.games.GCDGame;
-import hexlet.code.games.ProgressionGame;
-import hexlet.code.games.PrimeGame;
+import com.zhd4.mindgames.games.CalculatorGame;
+import com.zhd4.mindgames.games.EvenGame;
+import com.zhd4.mindgames.games.GCDGame;
+import com.zhd4.mindgames.games.PrimeGame;
+import com.zhd4.mindgames.games.ProgressionGame;
 
 import java.util.Scanner;
 

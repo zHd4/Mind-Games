@@ -3,7 +3,7 @@ plugins {
     id 'checkstyle'
 }
 
-group = 'hexlet.code'
+group = 'com.zhd4.mindgames'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 }
 
 application {
-    mainClass = 'hexlet.code.App'
+    mainClass = 'com.zhd4.mindgames.App'
 }
 
 compileJava {

@@ -1,4 +1,4 @@
-package com.zhd4.mindgames;
+package app.mindgames;
 
 import java.util.Random;
 

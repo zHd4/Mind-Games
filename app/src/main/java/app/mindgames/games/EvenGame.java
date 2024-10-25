@@ -1,7 +1,7 @@
-package com.zhd4.mindgames.games;
+package app.mindgames.games;
 
-import com.zhd4.mindgames.Engine;
-import com.zhd4.mindgames.Utils;
+import app.mindgames.Engine;
+import app.mindgames.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

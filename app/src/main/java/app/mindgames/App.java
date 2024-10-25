@@ -1,11 +1,11 @@
-package com.zhd4.mindgames;
+package app.mindgames;
 
 
-import com.zhd4.mindgames.games.CalculatorGame;
-import com.zhd4.mindgames.games.EvenGame;
-import com.zhd4.mindgames.games.GCDGame;
-import com.zhd4.mindgames.games.PrimeGame;
-import com.zhd4.mindgames.games.ProgressionGame;
+import app.mindgames.games.CalculatorGame;
+import app.mindgames.games.EvenGame;
+import app.mindgames.games.GCDGame;
+import app.mindgames.games.PrimeGame;
+import app.mindgames.games.ProgressionGame;
 
 import java.util.Scanner;
 
